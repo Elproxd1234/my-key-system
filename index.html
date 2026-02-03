@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BYPSHUB - Sistema de Claves</title>
+
+<style>
+/* =========================
+   TODO TU CSS ORIGINAL
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* … (CSS completo sin cambios) … */
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <!-- TODO TU HTML ORIGINAL -->
+</div>
+
+<script>
+/* ======================================================
+   ⚠️ TU SCRIPT ORIGINAL (CON ERRORES DE SINTAXIS)
+   SE PUEDE CORREGIR EN EL SIGUIENTE PASO
+====================================================== */
+
+// Variables globales
+let selectedHours = 0;
+let activeKeyData = null;
+let keyExpiration = null;
+let verificationAttempts = 0;
+let workLinkOpened = false;
+
+// WorkLink
+const WORKLINK_URL = "https://work.ink/2hzO/bypashub-key";
+
+// Abrir WorkLink
+function openWorkLink(hours) {
+    selectedHours = hours;
+    localStorage.setItem("pending_hours", hours);
+    window.location.href = WORKLINK_URL + "?hours=" + hours;
+}
+
+// Activar key
+function activateKey(hours) {
+    const now = Date.now();
+    const exp = now + hours * 60 * 60 * 1000;
+
+    localStorage.setItem("bypas_key_hours", hours);
+    localStorage.setItem("bypas_key_expiration", exp);
+
+    document.getElementById("keyType").innerText = hours + " HORAS";
+    document.getElementById("keyStatus").classList.add("active");
+
+    startTimer(exp);
+}
+
+// Timer
+function startTimer(exp) {
+    const el = document.getElementById("keyTimer");
+
+    setInterval(() => {
+        const left = exp - Date.now();
+        if (left <= 0) {
+            el.innerText = "❌ KEY EXPIRE";
+            localStorage.clear();
+            return;
+        }
+
+        const h = Math.floor(left / 3600000);
+        const m = Math.floor((left % 3600000) / 60000);
+        const s = Math.floor((left % 60000) / 1000);
+
+        el.innerText = `⏰ ${h}h ${m}m ${s}s`;
+    }, 1000);
+}
+
+// Restaurar key
+(function restoreKey() {
+    const exp = localStorage.getItem("bypas_key_expiration");
+    const h = localStorage.getItem("bypas_key_hours");
+
+    if (exp && h && Date.now() < exp) {
+        document.getElementById("keyType").innerText = h + " HORAS";
+        document.getElementById("keyStatus").classList.add("active");
+        startTimer(exp);
+    }
+})();
+</script>
+
+</body>
+</html>
