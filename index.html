@@ -1,100 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BYPSHUB - Sistema de Claves</title>
-
-<style>
-/* =========================
-   TODO TU CSS ORIGINAL
-========================= */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
-
-/* … (CSS completo sin cambios) … */
-</style>
+  <meta charset="UTF-8">
+  <title>BYPAS.HUB KEY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: #0b0f1a;
+      color: #00aaff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    a {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 14px 22px;
+      background: #00aaff;
+      color: #000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
-    <!-- TODO TU HTML ORIGINAL -->
-</div>
+  <div>
+    <h1>BYPAS.HUB KEY SYSTEM</h1>
+    <p>Completá el WorkLink para obtener tu key</p>
 
-<script>
-/* ======================================================
-   ⚠️ TU SCRIPT ORIGINAL (CON ERRORES DE SINTAXIS)
-   SE PUEDE CORREGIR EN EL SIGUIENTE PASO
-====================================================== */
-
-// Variables globales
-let selectedHours = 0;
-let activeKeyData = null;
-let keyExpiration = null;
-let verificationAttempts = 0;
-let workLinkOpened = false;
-
-// WorkLink
-const WORKLINK_URL = "https://work.ink/2hzO/bypashub-key";
-
-// Abrir WorkLink
-function openWorkLink(hours) {
-    selectedHours = hours;
-    localStorage.setItem("pending_hours", hours);
-    window.location.href = WORKLINK_URL + "?hours=" + hours;
-}
-
-// Activar key
-function activateKey(hours) {
-    const now = Date.now();
-    const exp = now + hours * 60 * 60 * 1000;
-
-    localStorage.setItem("bypas_key_hours", hours);
-    localStorage.setItem("bypas_key_expiration", exp);
-
-    document.getElementById("keyType").innerText = hours + " HORAS";
-    document.getElementById("keyStatus").classList.add("active");
-
-    startTimer(exp);
-}
-
-// Timer
-function startTimer(exp) {
-    const el = document.getElementById("keyTimer");
-
-    setInterval(() => {
-        const left = exp - Date.now();
-        if (left <= 0) {
-            el.innerText = "❌ KEY EXPIRE";
-            localStorage.clear();
-            return;
-        }
-
-        const h = Math.floor(left / 3600000);
-        const m = Math.floor((left % 3600000) / 60000);
-        const s = Math.floor((left % 60000) / 1000);
-
-        el.innerText = `⏰ ${h}h ${m}m ${s}s`;
-    }, 1000);
-}
-
-// Restaurar key
-(function restoreKey() {
-    const exp = localStorage.getItem("bypas_key_expiration");
-    const h = localStorage.getItem("bypas_key_hours");
-
-    if (exp && h && Date.now() < exp) {
-        document.getElementById("keyType").innerText = h + " HORAS";
-        document.getElementById("keyStatus").classList.add("active");
-        startTimer(exp);
-    }
-})();
-</script>
+    <!-- ACÁ VA TU WORKLINK -->
+    <a href="https://work.ink/2hzO/bypashub-key" target="_blank">
+      IR AL WORKLINK
+    </a>
+  </div>
 
 </body>
 </html>
