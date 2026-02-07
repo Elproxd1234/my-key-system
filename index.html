@@ -1,44 +1,830 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>BYPAS.HUB KEY</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: #0b0f1a;
-      color: #00aaff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
-    a {
-      margin-top: 20px;
-      display: inline-block;
-      padding: 14px 22px;
-      background: #00aaff;
-      color: #000;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYPSHUB - Generador de Keys</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0a0a1a, #1a0a2a);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .container {
+            background: rgba(20, 20, 40, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #00a8ff;
+            box-shadow: 0 0 40px rgba(0, 168, 255, 0.4);
+            max-width: 900px;
+            margin: 20px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #00a8ff;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 168, 255, 0.7);
+        }
+        
+        .section {
+            background: rgba(30, 30, 60, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(100, 100, 255, 0.3);
+        }
+        
+        .generator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .generator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .generator-box {
+            background: rgba(40, 40, 80, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #ffd700;
+        }
+        
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .valid {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.15), rgba(0, 200, 80, 0.1));
+            border: 2px solid #00ff64;
+            color: #00ff64;
+        }
+        
+        .invalid {
+            background: linear-gradient(135deg, rgba(255, 50, 50, 0.15), rgba(200, 30, 30, 0.1));
+            border: 2px solid #ff3232;
+            color: #ff3232;
+        }
+        
+        .generated-key {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(200, 170, 0, 0.1));
+            border: 2px solid #ffd700;
+            padding: 15px;
+            border-radius = 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .generated-key:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(200, 170, 0, 0.2));
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+        }
+        
+        .key-info {
+            background: rgba(100, 100, 255, 0.1);
+            border: 2px solid #6464ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .api-response {
+            background: rgba(150, 100, 255, 0.1);
+            border: 2px solid #9664ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            text-align: left;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 250px;
+            overflow-y: auto;
+            font-size: 0.9em;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00a8ff, #0066ff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 168, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 168, 255, 0.6);
+        }
+        
+        .btn-generate {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-generate:hover {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+        }
+        
+        .select-tier {
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(40, 40, 80, 0.8);
+            color: white;
+            border: 2px solid #6464ff;
+            font-size: 1em;
+            margin: 10px;
+            width: 200px;
+        }
+        
+        .copy-btn {
+            background: rgba(100, 255, 100, 0.2);
+            border: 1px solid #64ff64;
+            color: #64ff64;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        .copy-btn:hover {
+            background: rgba(100, 255, 100, 0.3);
+        }
+        
+        .instructions {
+            background: rgba(50, 50, 100, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 4px solid #00ff64;
+        }
+        
+        .note {
+            color: #ffd700;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>🔐 BYPAS.HUB - Generador de Keys</h1>
+        <p>Sistema de generación y verificación de keys infinitas</p>
+        
+        <!-- ============================================
+             SECCIÓN DE GENERACIÓN DE KEYS
+        ============================================ -->
+        <div class="section">
+            <h2>🎮 Generar Nueva Key</h2>
+            <p>Selecciona el tipo de key y genera una nueva:</p>
+            
+            <div class="generator">
+                <!-- Panel Izquierdo: Configuración -->
+                <div class="generator-box">
+                    <h3>⚙️ Configuración</h3>
+                    
+                    <div style="margin: 15px 0;">
+                        <label for="tierSelect">Tipo de Key:</label><br>
+                        <select id="tierSelect" class="select-tier">
+                            <option value="trial">Prueba (2 horas)</option>
+                            <option value="basic">Básica (24 horas)</option>
+                            <option value="pro">Pro (7 días)</option>
+                            <option value="premium" selected>Premium (30 días)</option>
+                            <option value="lifetime">Vitalicia (∞)</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <label for="customPrefix">Prefijo Personalizado:</label><br>
+                        <input type="text" id="customPrefix" placeholder="Ej: BYPAS" 
+                               style="padding: 10px; border-radius: 8px; background: rgba(40,40,80,0.8); color: white; border: 2px solid #6464ff; width: 150px;">
+                    </div>
+                    
+                    <button class="btn btn-generate" onclick="generateNewKey()">
+                        🚀 Generar Nueva Key
+                    </button>
+                    
+                    <button class="btn" onclick="generateBatch()">
+                        📦 Generar 5 Keys
+                    </button>
+                </div>
+                
+                <!-- Panel Derecho: Resultado -->
+                <div class="generator-box">
+                    <h3>🔑 Key Generada</h3>
+                    
+                    <div id="generatedKeyDisplay" class="generated-key" onclick="copyToClipboard(this)">
+                        Esperando generación...
+                    </div>
+                    
+                    <div id="keyDetails" style="display: none;">
+                        <div class="key-info">
+                            <p><strong>Tipo:</strong> <span id="detailTier"></span></p>
+                            <p><strong>Duración:</strong> <span id="detailDuration"></span></p>
+                            <p><strong>Expira:</strong> <span id="detailExpires"></span></p>
+                            <p><strong>Para usar:</strong> <code id="detailUsage"></code></p>
+                        </div>
+                        
+                        <button class="copy-btn" onclick="copyGeneratedKey()">
+                            📋 Copiar Key al Portapapeles
+                        </button>
+                    </div>
+                    
+                    <div id="batchKeys" style="display: none; margin-top: 15px;">
+                        <h4>📦 Lote de Keys Generadas</h4>
+                        <div id="batchList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================
+             SECCIÓN DE VERIFICACIÓN
+        ============================================ -->
+        <div class="section">
+            <h2>🔍 Verificar Key Existente</h2>
+            <p>Verifica si una key es válida:</p>
+            
+            <div style="margin: 20px 0;">
+                <input type="text" id="keyToVerify" placeholder="Pega la key aquí..." 
+                       style="padding: 12px; border-radius: 8px; background: rgba(40,40,80,0.8); color: white; border: 2px solid #6464ff; width: 300px; font-size: 1em;">
+                <button class="btn" onclick="verifyUserKey()">🔎 Verificar</button>
+            </div>
+            
+            <div id="verificationStatus" class="status">
+                Ingresa una key para verificar...
+            </div>
+            
+            <div id="verificationInfo" class="key-info" style="display: none;">
+                <h3>📋 Información de la Key</h3>
+                <p><strong>Key:</strong> <span id="verificationKey"></span></p>
+                <p><strong>Estado:</strong> <span id="verificationStatusText"></span></p>
+                <p><strong>Tipo:</strong> <span id="verificationTier"></span></p>
+                <p><strong>Expira:</strong> <span id="verificationExpires"></span></p>
+                <p><strong>Generada:</strong> <span id="verificationCreated"></span></p>
+            </div>
+        </div>
+        
+        <!-- ============================================
+             SECCIÓN DE API
+        ============================================ -->
+        <div class="section">
+            <h2>📡 API para Roblox</h2>
+            
+            <div class="instructions">
+                <p><strong>Para integrar con BYPAS.HUB v6.3:</strong></p>
+                <!-- ✅ URL CORRECTA: -->
+                <p>URL de verificación: <code>https://elproxd1234.github.io/gfwergwgwg/?key=TU_KEY&hub=1</code></p>
+                <p>Devuelve JSON con la estructura:</p>
+                <pre>{
+  "valid": true/false,
+  "key": "KEY_GENERADA",
+  "tier": "premium/basic/etc",
+  "expiresAt": 1730000000,
+  "message": "Mensaje de estado"
+}</pre>
+            </div>
+            
+            <div id="apiResponse" class="api-response" style="display: none;">
+                <h4>📦 Respuesta API en tiempo real:</h4>
+                <pre id="jsonOutput">Esperando verificación...</pre>
+            </div>
+        </div>
+        
+        <!-- ============================================
+             INSTRUCCIONES
+        ============================================ -->
+        <div class="section">
+            <h2>📝 Instrucciones de Uso</h2>
+            
+            <div class="instructions">
+                <p><strong>1. Generación:</strong> Crea keys ilimitadas seleccionando el tipo.</p>
+                <p><strong>2. Distribución:</strong> Comparte las keys con usuarios de BYPAS.HUB.</p>
+                <p><strong>3. Verificación:</strong> Los usuarios ingresan la key en el script de Roblox.</p>
+                <p><strong>4. Activación:</strong> El script verifica automáticamente con esta página.</p>
+                <p><strong>5. Expiración:</strong> Cada key tiene fecha de expiración según su tipo.</p>
+            </div>
+            
+            <p class="note">💡 Las keys se almacenan en el navegador del usuario. Para persistencia completa, considera usar un backend.</p>
+        </div>
+    </div>
 
-  <div>
-    <h1>BYPAS.HUB KEY SYSTEM</h1>
-    <p>Completá el WorkLink para obtener tu key</p>
-
-    <!-- ACÁ VA TU WORKLINK -->
-    <a href="https://work.ink/2hzO/bypashub-key" target="_blank">
-      IR AL WORKLINK
-    </a>
-  </div>
-
+    <script>
+        // ============================================
+        // SISTEMA DE ALMACENAMIENTO DE KEYS
+        // ============================================
+        const KEY_STORAGE = 'bypas_hub_keys';
+        
+        // Inicializar almacenamiento
+        function initializeStorage() {
+            if (!localStorage.getItem(KEY_STORAGE)) {
+                localStorage.setItem(KEY_STORAGE, JSON.stringify({}));
+            }
+        }
+        
+        // Obtener todas las keys
+        function getAllKeys() {
+            initializeStorage();
+            return JSON.parse(localStorage.getItem(KEY_STORAGE)) || {};
+        }
+        
+        // Guardar una key
+        function saveKey(key, data) {
+            const keys = getAllKeys();
+            keys[key] = data;
+            localStorage.setItem(KEY_STORAGE, JSON.stringify(keys));
+        }
+        
+        // Obtener una key específica
+        function getKey(key) {
+            const keys = getAllKeys();
+            return keys[key];
+        }
+        
+        // Eliminar una key
+        function deleteKey(key) {
+            const keys = getAllKeys();
+            delete keys[key];
+            localStorage.setItem(KEY_STORAGE, JSON.stringify(keys));
+        }
+        
+        // ============================================
+        // GENERADOR DE KEYS
+        // ============================================
+        function generateKey(prefix = 'BYPAS') {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            const timestamp = Date.now().toString(36).toUpperCase();
+            let key = prefix + '-';
+            
+            // Generar parte aleatoria
+            for (let i = 0; i < 8; i++) {
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            key += '-' + timestamp.substring(0, 4);
+            
+            return key;
+        }
+        
+        // ============================================
+        // CONFIGURACIÓN DE TIERS
+        // ============================================
+        const tierConfig = {
+            'trial': {
+                name: 'Prueba',
+                duration: 2 * 60 * 60, // 2 horas en segundos
+                color: '#ff9900'
+            },
+            'basic': {
+                name: 'Básica',
+                duration: 24 * 60 * 60, // 24 horas
+                color: '#00a8ff'
+            },
+            'pro': {
+                name: 'Pro',
+                duration: 7 * 24 * 60 * 60, // 7 días
+                color: '#aa00ff'
+            },
+            'premium': {
+                name: 'Premium',
+                duration: 30 * 24 * 60 * 60, // 30 días
+                color: '#ffd700'
+            },
+            'lifetime': {
+                name: 'Vitalicia',
+                duration: 365 * 24 * 60 * 60 * 10, // 10 años (prácticamente ∞)
+                color: '#00ff64'
+            }
+        };
+        
+        // ============================================
+        // GENERAR NUEVA KEY
+        // ============================================
+        function generateNewKey() {
+            const tierSelect = document.getElementById('tierSelect');
+            const customPrefix = document.getElementById('customPrefix').value.trim();
+            const tier = tierSelect.value;
+            const prefix = customPrefix || 'BYPAS';
+            
+            // Generar key única
+            let key;
+            do {
+                key = generateKey(prefix);
+            } while (getKey(key)); // Asegurar unicidad
+            
+            const now = Math.floor(Date.now() / 1000);
+            const config = tierConfig[tier];
+            const expiresAt = now + config.duration;
+            
+            // Crear objeto key
+            const keyData = {
+                key: key,
+                tier: tier,
+                name: config.name,
+                created: now,
+                expiresAt: expiresAt,
+                valid: true,
+                message: `✅ Key ${config.name} válida - BYPAS.HUB v6.3`
+            };
+            
+            // Guardar en almacenamiento
+            saveKey(key, keyData);
+            
+            // Mostrar en UI
+            displayGeneratedKey(keyData);
+            
+            // Mostrar notificación
+            showNotification(`✅ Key ${config.name} generada correctamente!`, 'success');
+            
+            return keyData;
+        }
+        
+        // ============================================
+        // GENERAR LOTE DE KEYS
+        // ============================================
+        function generateBatch() {
+            const tierSelect = document.getElementById('tierSelect');
+            const customPrefix = document.getElementById('customPrefix').value.trim();
+            const tier = tierSelect.value;
+            const prefix = customPrefix || 'BYPAS';
+            const count = 5;
+            
+            const batch = [];
+            const batchList = document.getElementById('batchList');
+            batchList.innerHTML = '';
+            
+            for (let i = 0; i < count; i++) {
+                const keyData = generateNewKey();
+                batch.push(keyData);
+                
+                // Añadir a la lista
+                const keyElement = document.createElement('div');
+                keyElement.className = 'generated-key';
+                keyElement.style.fontSize = '0.9em';
+                keyElement.style.margin = '5px 0';
+                keyElement.style.padding = '10px';
+                keyElement.textContent = keyData.key;
+                keyElement.onclick = () => {
+                    copyToClipboard(keyData.key);
+                    showNotification(`📋 Key ${keyData.key} copiada!`, 'success');
+                };
+                
+                batchList.appendChild(keyElement);
+            }
+            
+            document.getElementById('batchKeys').style.display = 'block';
+            document.getElementById('keyDetails').style.display = 'none';
+            
+            showNotification(`📦 ${count} keys ${tierConfig[tier].name} generadas!`, 'success');
+        }
+        
+        // ============================================
+        // MOSTRAR KEY GENERADA
+        // ============================================
+        function displayGeneratedKey(keyData) {
+            const keyDisplay = document.getElementById('generatedKeyDisplay');
+            const detailsDiv = document.getElementById('keyDetails');
+            const config = tierConfig[keyData.tier];
+            
+            // Mostrar key
+            keyDisplay.textContent = keyData.key;
+            keyDisplay.style.borderColor = config.color;
+            keyDisplay.style.background = `linear-gradient(135deg, ${config.color}20, ${config.color}10)`;
+            
+            // Mostrar detalles
+            document.getElementById('detailTier').textContent = config.name;
+            document.getElementById('detailTier').style.color = config.color;
+            
+            // Calcular duración
+            let durationText;
+            if (keyData.tier === 'lifetime') {
+                durationText = 'Vitalicia (∞)';
+            else {
+                const hours = config.duration / 3600;
+                if (hours < 24) {
+                    durationText = `${hours} horas`;
+                } else if (hours < 168) {
+                    durationText = `${hours / 24} días`;
+                } else {
+                    durationText = `${hours / 24 / 30} meses`;
+                }
+            }
+            
+            document.getElementById('detailDuration').textContent = durationText;
+            
+            // Fecha de expiración
+            const expireDate = new Date(keyData.expiresAt * 1000);
+            document.getElementById('detailExpires').textContent = expireDate.toLocaleString('es-ES');
+            
+            // ✅ URL CORRECTA:
+            document.getElementById('detailUsage').textContent = 
+                `https://elproxd1234.github.io/gfwergwgwg/?key=${keyData.key}&hub=1`;
+            
+            // Mostrar detalles
+            detailsDiv.style.display = 'block';
+            document.getElementById('batchKeys').style.display = 'none';
+        }
+        
+        // ============================================
+        // VERIFICAR KEY
+        // ============================================
+        function verifyKey(keyParam) {
+            initializeStorage();
+            
+            if (!keyParam || keyParam.trim() === "") {
+                return {
+                    valid: false,
+                    message: "❌ No se proporcionó una key"
+                };
+            }
+            
+            const keyUpper = keyParam.toUpperCase().trim();
+            const keyData = getKey(keyUpper);
+            
+            if (keyData) {
+                // Verificar expiración
+                const now = Math.floor(Date.now() / 1000);
+                
+                if (now > keyData.expiresAt && keyData.tier !== 'lifetime') {
+                    return {
+                        valid: false,
+                        key: keyUpper,
+                        message: "❌ Key expirada"
+                    };
+                }
+                
+                // Key válida
+                return {
+                    ...keyData,
+                    valid: true
+                };
+            } else {
+                // Verificar si es una key especial del sistema
+                const now = Math.floor(Date.now() / 1000);
+                const systemKeys = {
+                    'ADMIN999': { tier: 'lifetime', expiresAt: 4102444800, message: "✅ Key Admin válida" },
+                    'DEVTEST': { tier: 'premium', expiresAt: now + (365 * 24 * 60 * 60), message: "✅ Key Dev Test válida" },
+                    'BYPAS123': { tier: 'premium', expiresAt: now + (30 * 24 * 60 * 60), message: "✅ Key de prueba válida" }
+                };
+                
+                if (systemKeys[keyUpper]) {
+                    const sysData = systemKeys[keyUpper];
+                    return {
+                        valid: true,
+                        key: keyUpper,
+                        tier: sysData.tier,
+                        name: tierConfig[sysData.tier].name,
+                        expiresAt: sysData.expiresAt,
+                        message: sysData.message
+                    };
+                }
+                
+                // Key no encontrada
+                return {
+                    valid: false,
+                    key: keyUpper,
+                    message: "❌ Key inválida o no encontrada"
+                };
+            }
+        }
+        
+        // ============================================
+        // VERIFICAR KEY DESDE UI
+        // ============================================
+        function verifyUserKey() {
+            const keyInput = document.getElementById('keyToVerify');
+            const key = keyInput.value.trim();
+            
+            if (!key) {
+                showNotification('⚠️ Ingresa una key para verificar', 'warning');
+                return;
+            }
+            
+            const result = verifyKey(key);
+            displayVerificationResult(result);
+        }
+        
+        // ============================================
+        // MOSTRAR RESULTADO DE VERIFICACIÓN
+        // ============================================
+        function displayVerificationResult(result) {
+            const statusDiv = document.getElementById('verificationStatus');
+            const infoDiv = document.getElementById('verificationInfo');
+            const apiDiv = document.getElementById('apiResponse');
+            const jsonOutput = document.getElementById('jsonOutput');
+            
+            // Mostrar estado
+            if (result.valid) {
+                statusDiv.className = 'status valid';
+                statusDiv.innerHTML = `✅ ${result.message}`;
+                
+                // Mostrar información
+                document.getElementById('verificationKey').textContent = result.key;
+                document.getElementById('verificationStatusText').innerHTML = 
+                    '<span style="color:#00ff64">✅ VÁLIDA</span>';
+                document.getElementById('verificationTier').innerHTML = 
+                    `<span style="color:${tierConfig[result.tier].color}">${tierConfig[result.tier].name}</span>`;
+                
+                // Fecha de expiración
+                if (result.tier === 'lifetime') {
+                    document.getElementById('verificationExpires').textContent = 'Nunca (Vitalicia)';
+                } else {
+                    const expireDate = new Date(result.expiresAt * 1000);
+                    document.getElementById('verificationExpires').textContent = 
+                        expireDate.toLocaleString('es-ES');
+                }
+                
+                // Fecha de creación
+                if (result.created) {
+                    const createdDate = new Date(result.created * 1000);
+                    document.getElementById('verificationCreated').textContent = 
+                        createdDate.toLocaleString('es-ES');
+                } else {
+                    document.getElementById('verificationCreated').textContent = 'Desconocida';
+                }
+                
+                infoDiv.style.display = 'block';
+                
+            } else {
+                statusDiv.className = 'status invalid';
+                statusDiv.innerHTML = result.message;
+                infoDiv.style.display = 'none';
+            }
+            
+            // Mostrar respuesta API
+            jsonOutput.textContent = JSON.stringify(result, null, 2);
+            apiDiv.style.display = 'block';
+            
+            // También mostrar en consola para debugging
+            console.log('🔍 Verificación completada:', result);
+        }
+        
+        // ============================================
+        // UTILIDADES
+        // ============================================
+        function copyGeneratedKey() {
+            const keyDisplay = document.getElementById('generatedKeyDisplay');
+            copyToClipboard(keyDisplay.textContent);
+            showNotification('📋 Key copiada al portapapeles!', 'success');
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Copiado al portapapeles!', 'success');
+            }).catch(err => {
+                // Fallback para navegadores antiguos
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('📋 Copiado al portapapeles!', 'success');
+            });
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Crear notificación
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                border-radius: 10px;
+                color: white;
+                font-weight: bold;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                background: ${type === 'success' ? '#00ff64' : type === 'error' ? '#ff3232' : '#00a8ff'};
+                box-shadow: 0 0 20px ${type === 'success' ? 'rgba(0,255,100,0.5)' : type === 'error' ? 'rgba(255,50,50,0.5)' : 'rgba(0,168,255,0.5)'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Eliminar después de 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // ============================================
+        // MANEJAR PARÁMETROS DE URL
+        // ============================================
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                key: params.get('key'),
+                hub: params.get('hub')
+            };
+        }
+        
+        // ============================================
+        // INICIALIZACIÓN
+        // ============================================
+        window.onload = function() {
+            initializeStorage();
+            
+            const params = getUrlParams();
+            
+            // ✅ ESTA ES LA PARTE MÁS IMPORTANTE:
+            // Si es una solicitud de API (hub=1), devolver SOLO JSON
+            if (params.hub === '1') {
+                const result = verifyKey(params.key);
+                
+                // Ocultar todo y mostrar solo JSON
+                document.body.innerHTML = '';
+                
+                // Establecer headers para JSON
+                const meta = document.createElement('meta');
+                meta.httpEquiv = 'Content-Type';
+                meta.content = 'application/json';
+                document.head.appendChild(meta);
+                
+                // Mostrar JSON
+                document.open();
+                document.write(JSON.stringify(result));
+                document.close();
+                
+            } else if (params.key) {
+                // Modo navegador con key en URL - verificar automáticamente
+                document.getElementById('keyToVerify').value = params.key;
+                verifyUserKey();
+            }
+            
+            // Inicializar con una key de ejemplo
+            const exampleKey = generateKey();
+            document.getElementById('generatedKeyDisplay').textContent = exampleKey;
+            
+            console.log('🚀 BYPAS.HUB Key System v2.0 - Listo!');
+            console.log('📊 Keys almacenadas:', Object.keys(getAllKeys()).length);
+        };
+        
+        // ============================================
+        // ESTILOS ANIMADOS
+        // ============================================
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0.7); }
+                70% { box-shadow: 0 0 0 10px rgba(0, 168, 255, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(0, 168, 255, 0); }
+            }
+            
+            .generated-key {
+                animation: pulse 2s infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
